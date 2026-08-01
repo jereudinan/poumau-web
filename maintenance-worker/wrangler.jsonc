@@ -1,0 +1,9 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "poumau-retention-maintenance",
+  "main": "./src/index.ts",
+  "compatibility_date": "2026-08-01",
+  "triggers": { "crons": ["15 18 * * *"] },
+  "d1_databases": [{ "binding": "DB", "database_name": "poumau-web" }],
+  "observability": { "enabled": true }
+}

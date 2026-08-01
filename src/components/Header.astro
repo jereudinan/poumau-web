@@ -1,0 +1,6 @@
+---
+import { NAV_ITEMS } from '../lib/constants';
+const path = Astro.url.pathname;
+---
+<header class="site-header"><div class="container header-inner"><a class="brand" href="/" aria-label="파우마우 홈"><img src="/images/brand/poumau-word.png" alt="POUMAU" /></a><button class="menu-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false"><span></span><span></span><span></span></button><nav class="nav" aria-label="주요 메뉴">{NAV_ITEMS.map((item)=><a href={item.href} aria-current={path.startsWith(item.href)?'page':undefined}>{item.label}</a>)}<a class="btn btn--small" href="https://smartstore.naver.com/haruneko" target="_blank" rel="noreferrer">스마트스토어</a></nav></div></header>
+<script>const toggle=document.querySelector<HTMLButtonElement>('.menu-toggle');const nav=document.querySelector<HTMLElement>('.nav');toggle?.addEventListener('click',()=>{const open=nav?.classList.toggle('is-open')??false;toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'메뉴 닫기':'메뉴 열기');document.body.classList.toggle('menu-open',open)});</script>

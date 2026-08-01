@@ -1,0 +1,5 @@
+---
+import { env } from 'cloudflare:workers'; import BaseLayout from '../../layouts/BaseLayout.astro'; import PageHero from '../../components/PageHero.astro'; import type { NewsPost } from '../../lib/types';
+let posts:NewsPost[]=[];try{posts=(await env.DB.prepare('SELECT * FROM news_posts WHERE is_visible=1 ORDER BY published_at DESC').all<NewsPost>()).results}catch{}
+---
+<BaseLayout title="파우마우 소식 | 파우마우" description="신제품과 입점, 행사 등 파우마우의 새로운 이야기를 전합니다."><PageHero eyebrow="News" title="파우마우의 새로운 이야기" description="신제품, 입점 소식과 브랜드의 요즘을 차곡차곡 전합니다."/><section class="section section--soft"><div class="container">{posts.length?<div class="grid-3">{posts.map(p=><a class="card reveal" href={`/news/${p.slug}`}><div class="card-media">{p.thumbnail_url&&<img src={p.thumbnail_url} alt={p.alt_text}/>}</div><div class="card-body"><div class="card-meta"><time>{p.published_at.slice(0,10)}</time></div><h3>{p.title}</h3><p>{p.body.slice(0,100)}{p.body.length>100?'…':''}</p></div></a>)}</div>:<div class="empty"><img src="/images/brand/poumau-cat.png" alt=""/><h3>첫 번째 소식을 준비하고 있습니다</h3><p>새로운 이야기가 등록되면 이곳에서 가장 먼저 알려드릴게요.</p></div>}</div></section></BaseLayout>

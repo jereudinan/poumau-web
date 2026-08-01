@@ -1,0 +1,37 @@
+{
+  "name": "poumau-official-web",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "check": "astro check",
+    "test": "vitest run",
+    "db:migrate:local": "wrangler d1 migrations apply poumau-web --local",
+    "db:migrate:remote": "wrangler d1 migrations apply poumau-web --remote",
+    "deploy": "npm run build && wrangler deploy",
+    "preview": "astro preview",
+    "astro": "astro",
+    "generate-types": "wrangler types"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^14.1.7",
+    "@astrojs/react": "^6.0.2",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "astro": "^7.1.6",
+    "jose": "^6.2.6",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "wrangler": "^4.118.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.10"
+  }
+}
