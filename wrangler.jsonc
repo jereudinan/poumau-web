@@ -12,7 +12,8 @@
 	"d1_databases": [
 		{
 			"binding": "DB",
-			"database_name": "poumau-web"
+			"database_name": "poumau-web",
+			"database_id": "9a421a9a-96a6-4266-add4-416d0f8d32ae"
 		}
 	],
 	"r2_buckets": [
