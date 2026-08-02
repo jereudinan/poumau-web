@@ -24,7 +24,8 @@
 	],
 	"vars": {
 		"PUBLIC_SITE_URL": "https://poumau.com",
-		"CONTACT_RETENTION_YEARS": "3"
+		"CONTACT_RETENTION_YEARS": "3",
+		"PUBLIC_TURNSTILE_SITE_KEY": "발급받은-SITEKEY"
 	},
 	"observability": {
 		"enabled": true
