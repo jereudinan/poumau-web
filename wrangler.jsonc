@@ -25,7 +25,9 @@
 	"vars": {
 		"PUBLIC_SITE_URL": "https://poumau.com",
 		"CONTACT_RETENTION_YEARS": "3",
-		"PUBLIC_TURNSTILE_SITE_KEY": "발급받은-SITEKEY"
+		"PUBLIC_TURNSTILE_SITE_KEY": "0x4AAAAAAEESCH4wrxa36cFU",
+		"TEAM_DOMAIN": "https://poumau.cloudflareaccess.com",
+		"POLICY_AUD": "cb4b494c53ea58bdc17b5a09fe0b1f714a816af136410093a3582c001441e461"
 	},
 	"observability": {
 		"enabled": true

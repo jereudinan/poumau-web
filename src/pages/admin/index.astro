@@ -1,4 +1,6 @@
 ---
 import AdminApp from '../../components/AdminApp';
+const requestedTab=Astro.url.searchParams.get('tab');
+const initialTab=requestedTab==='products'||requestedTab==='news'||requestedTab==='stores'?requestedTab:'inquiries';
 ---
-<!doctype html><html lang="ko"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width"/><meta name="robots" content="noindex,nofollow"/><title>파우마우 관리자</title></head><body><AdminApp client:load/></body></html>
+<!doctype html><html lang="ko"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width"/><meta name="robots" content="noindex,nofollow"/><title>파우마우 관리자</title></head><body><AdminApp client:load initialTab={initialTab}/></body></html>

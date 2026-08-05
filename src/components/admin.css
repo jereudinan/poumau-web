@@ -1,1 +1,316 @@
-:root{font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#282525;background:#f4f2f0}.admin-shell{min-height:100vh}.admin-sidebar{position:fixed;inset:0 auto 0 0;display:flex;width:240px;padding:28px 20px;background:#302d2c;color:#fff;flex-direction:column}.admin-brand{display:flex;align-items:center;gap:12px;padding:8px}.admin-brand img{width:110px}.admin-brand span{padding-left:12px;border-left:1px solid #67615f;font-size:.8rem}.admin-sidebar nav{display:grid;gap:6px;margin-top:50px}.admin-sidebar button{padding:14px;border:0;border-radius:10px;background:transparent;color:#cfc9c6;text-align:left}.admin-sidebar button.active,.admin-sidebar button:hover{background:#4a4644;color:#fff}.admin-back{margin-top:auto;color:#aaa3a0;font-size:.85rem}.admin-main{min-height:100vh;margin-left:240px;padding:48px}.admin-head{display:flex;align-items:end;justify-content:space-between;margin-bottom:36px}.admin-head p{margin:0;color:#d8425a;font-size:.75rem;font-weight:800;letter-spacing:.12em}.admin-head h1{margin:6px 0 0;font-size:2.2rem}.admin-primary{padding:11px 18px!important;border:0!important;border-radius:10px!important;background:#ef5f76!important;color:#fff!important;font-weight:700}.admin-message{padding:12px 16px;border-radius:10px;background:#fff1f3;color:#9b2739}.admin-tools{display:flex;gap:8px;margin-bottom:18px}.admin-tools input{min-width:300px}.admin-tools input,.admin-tools select,.admin-tools button,.editor input,.editor select,.editor textarea,.editor button{padding:11px 12px;border:1px solid #d9d2ce;border-radius:9px;background:#fff}.admin-list{display:grid;gap:14px}.inquiry-card,.content-list>article{padding:24px;border:1px solid #e4ddda;border-radius:16px;background:#fff}.inquiry-top{display:flex;align-items:center;gap:12px}.inquiry-top time{margin-left:auto;color:#8a8380;font-size:.8rem}.status,.visibility{padding:5px 9px;border-radius:999px;background:#eee;color:#6e6865;font-size:.72rem;font-weight:800}.status.new,.visibility.on{background:#fff0f3;color:#c63850}.inquiry-card dl{display:flex;gap:24px}.inquiry-card dl div{display:flex;gap:6px}.inquiry-card dt{color:#8a8380}.inquiry-card dd{margin:0}.inquiry-message{padding:18px;border-radius:10px;background:#f8f6f5;white-space:pre-wrap}.result{padding:16px;border-left:3px solid #4e9b72;background:#f2f8f5}.result p{margin:6px 0}.content-list>article{display:flex;align-items:center;justify-content:space-between}.content-list h3{margin:8px 0 2px}.content-list p{margin:0;color:#817a77}.content-list button{margin-left:7px;padding:8px 12px;border:1px solid #d9d2ce;border-radius:8px;background:#fff}.content-list .danger{color:#c63850}.admin-empty{padding:80px;text-align:center}.admin-loading{position:fixed;right:25px;bottom:25px;padding:12px 20px;border-radius:999px;background:#302d2c;color:#fff}.editor-backdrop{position:fixed;z-index:20;inset:0;display:grid;place-items:center;padding:20px;background:rgba(32,29,28,.55)}.editor{width:min(720px,100%);max-height:92vh;overflow:auto;padding:28px;border-radius:18px;background:#fff;box-shadow:0 24px 80px rgba(0,0,0,.24)}.editor header,.editor footer{display:flex;align-items:center;justify-content:space-between;gap:12px}.editor header{margin-bottom:24px}.editor header h2{margin:0}.editor footer{margin-top:26px}.admin-field{display:grid;gap:7px;margin:15px 0}.admin-field>span{font-size:.86rem;font-weight:700}.admin-field textarea{min-height:120px;resize:vertical}.inline{display:flex;gap:7px}.inline input{flex:1}.admin-check{display:inline-flex;align-items:center;gap:7px;margin-right:18px}.editor-preview{width:160px;max-height:120px;object-fit:cover;border-radius:9px}@media(max-width:760px){.admin-sidebar{position:static;width:auto}.admin-sidebar nav{grid-template-columns:repeat(2,1fr);margin-top:24px}.admin-back{margin-top:24px}.admin-main{margin-left:0;padding:26px 16px}.admin-head{align-items:start;gap:18px}.admin-tools{flex-direction:column}.admin-tools input{min-width:0}.inquiry-card dl{align-items:flex-start;flex-direction:column;gap:5px}.content-list>article{align-items:flex-start;gap:16px;flex-direction:column}}
+:root {
+  font-family:
+    Pretendard,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  color: #282525;
+  background: #f4f2f0;
+}
+.admin-shell {
+  min-height: 100vh;
+}
+.admin-sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  display: flex;
+  width: 240px;
+  padding: 28px 20px;
+  background: #302d2c;
+  color: #fff;
+  flex-direction: column;
+}
+.admin-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+}
+.admin-brand img {
+  width: 110px;
+}
+.admin-brand span {
+  padding-left: 12px;
+  border-left: 1px solid #67615f;
+  font-size: 0.8rem;
+}
+.admin-sidebar nav {
+  display: grid;
+  gap: 6px;
+  margin-top: 50px;
+}
+.admin-sidebar nav a {
+  padding: 14px;
+  border-radius: 10px;
+  color: #cfc9c6;
+  text-align: left;
+  text-decoration: none;
+}
+.admin-sidebar nav a.active,
+.admin-sidebar nav a:hover {
+  background: #4a4644;
+  color: #fff;
+}
+.admin-back {
+  margin-top: auto;
+  color: #aaa3a0;
+  font-size: 0.85rem;
+}
+.admin-main {
+  min-height: 100vh;
+  margin-left: 240px;
+  padding: 48px;
+}
+.admin-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 36px;
+}
+.admin-head p {
+  margin: 0;
+  color: #d8425a;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+.admin-head h1 {
+  margin: 6px 0 0;
+  font-size: 2.2rem;
+}
+.admin-primary {
+  padding: 11px 18px !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  background: #ef5f76 !important;
+  color: #fff !important;
+  font-weight: 700;
+}
+.admin-message {
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: #fff1f3;
+  color: #9b2739;
+}
+.admin-tools {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.admin-tools input {
+  min-width: 300px;
+}
+.admin-tools input,
+.admin-tools select,
+.admin-tools button,
+.editor input,
+.editor select,
+.editor textarea,
+.editor button {
+  padding: 11px 12px;
+  border: 1px solid #d9d2ce;
+  border-radius: 9px;
+  background: #fff;
+}
+.admin-list {
+  display: grid;
+  gap: 14px;
+}
+.inquiry-card,
+.content-list > article {
+  padding: 24px;
+  border: 1px solid #e4ddda;
+  border-radius: 16px;
+  background: #fff;
+}
+.inquiry-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.inquiry-top time {
+  margin-left: auto;
+  color: #8a8380;
+  font-size: 0.8rem;
+}
+.status,
+.visibility {
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: #eee;
+  color: #6e6865;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+.status.new,
+.visibility.on {
+  background: #fff0f3;
+  color: #c63850;
+}
+.inquiry-card dl {
+  display: flex;
+  gap: 24px;
+}
+.inquiry-card dl div {
+  display: flex;
+  gap: 6px;
+}
+.inquiry-card dt {
+  color: #8a8380;
+}
+.inquiry-card dd {
+  margin: 0;
+}
+.inquiry-message {
+  padding: 18px;
+  border-radius: 10px;
+  background: #f8f6f5;
+  white-space: pre-wrap;
+}
+.result {
+  padding: 16px;
+  border-left: 3px solid #4e9b72;
+  background: #f2f8f5;
+}
+.result p {
+  margin: 6px 0;
+}
+.content-list > article {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.content-list h3 {
+  margin: 8px 0 2px;
+}
+.content-list p {
+  margin: 0;
+  color: #817a77;
+}
+.content-list button {
+  margin-left: 7px;
+  padding: 8px 12px;
+  border: 1px solid #d9d2ce;
+  border-radius: 8px;
+  background: #fff;
+}
+.content-list .danger {
+  color: #c63850;
+}
+.admin-empty {
+  padding: 80px;
+  text-align: center;
+}
+.admin-loading {
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: #302d2c;
+  color: #fff;
+}
+.editor-backdrop {
+  position: fixed;
+  z-index: 20;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(32, 29, 28, 0.55);
+}
+.editor {
+  width: min(720px, 100%);
+  max-height: 92vh;
+  overflow: auto;
+  padding: 28px;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.24);
+}
+.editor header,
+.editor footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.editor header {
+  margin-bottom: 24px;
+}
+.editor header h2 {
+  margin: 0;
+}
+.editor footer {
+  margin-top: 26px;
+}
+.admin-field {
+  display: grid;
+  gap: 7px;
+  margin: 15px 0;
+}
+.admin-field > span {
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+.admin-field textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+.inline {
+  display: flex;
+  gap: 7px;
+}
+.inline input {
+  flex: 1;
+}
+.admin-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-right: 18px;
+}
+.editor-preview {
+  width: 160px;
+  max-height: 120px;
+  object-fit: cover;
+  border-radius: 9px;
+}
+@media (max-width: 760px) {
+  .admin-sidebar {
+    position: static;
+    width: auto;
+  }
+  .admin-sidebar nav {
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 24px;
+  }
+  .admin-back {
+    margin-top: 24px;
+  }
+  .admin-main {
+    margin-left: 0;
+    padding: 26px 16px;
+  }
+  .admin-head {
+    align-items: start;
+    gap: 18px;
+  }
+  .admin-tools {
+    flex-direction: column;
+  }
+  .admin-tools input {
+    min-width: 0;
+  }
+  .inquiry-card dl {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .content-list > article {
+    align-items: flex-start;
+    gap: 16px;
+    flex-direction: column;
+  }
+}
