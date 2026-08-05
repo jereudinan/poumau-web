@@ -1,6 +1,257 @@
 ---
-import { env } from 'cloudflare:workers'; import BaseLayout from '../layouts/BaseLayout.astro'; import PageHero from '../components/PageHero.astro';
-const selected=Astro.url.searchParams.get('type')??'';const product=Astro.url.searchParams.get('product')??'';
+import { env } from "cloudflare:workers";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+const selected = Astro.url.searchParams.get("type") ?? "";
+const product = Astro.url.searchParams.get("product") ?? "";
 ---
-<BaseLayout title="문의하기 | 파우마우" description="상품, 입점, 도매, 커스텀 제작 및 협업에 관해 파우마우에 문의하세요."><PageHero eyebrow="Contact" title="함께할 이야기를 들려주세요" description="상품과 커스텀 제작, 입점·도매, 협업에 관한 문의를 남겨주시면 확인 후 전화로 연락드립니다."/><section class="section section--soft"><div class="container contact-grid"><aside class="reveal"><p class="eyebrow">Before you send</p><h2>천천히 확인하고<br/>정성껏 답하겠습니다</h2><p>문의 내용은 관리자 페이지에서만 확인합니다. 접수 후 별도의 문자나 이메일은 발송되지 않습니다.</p><div class="contact-note"><strong>사업장</strong><span>경기도 부천시 소사구 소삼로14번길 28</span></div></aside><form id="contact-form" class="contact-form reveal"><div class="form-grid"><div class="field"><label for="name">이름 <small>선택</small></label><input id="name" name="name" maxlength="50" autocomplete="name"/></div><div class="field"><label for="phone">연락처 <em>필수</em></label><input id="phone" name="phone" required maxlength="20" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000"/></div><div class="field"><label for="company">회사명 <small>선택</small></label><input id="company" name="company" maxlength="100" autocomplete="organization"/></div><div class="field"><label for="inquiryType">문의 유형 <em>필수</em></label><select id="inquiryType" name="inquiryType" required><option value="">선택해 주세요</option>{['상품 문의','입점·도매 문의','제휴·협업 문의','오프라인 문의','기타'].map(x=><option value={x} selected={selected===x}>{x}</option>)}</select></div><div class="field field--full"><label for="message">문의 내용 <em>필수</em></label><textarea id="message" name="message" required maxlength="3000" placeholder="문의 내용을 자세히 알려주세요.">{product?`[문의 상품: ${product}]\n`:''}</textarea></div><div class="field field--full consent"><label><input type="checkbox" name="privacyConsent" required/><span><a href="/privacy" target="_blank">개인정보 수집 및 이용</a>에 동의합니다. <em>필수</em></span></label></div><div class="field field--full"><div class="cf-turnstile" data-sitekey={env.PUBLIC_TURNSTILE_SITE_KEY??'1x00000000000000000000AA'}></div><button class="btn btn--pink" type="submit">문의 접수하기</button><p id="form-message" role="status" aria-live="polite"></p></div></div></form></div></section><script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script></BaseLayout>
-<script>const form=document.querySelector<HTMLFormElement>('#contact-form');const status=document.querySelector<HTMLElement>('#form-message');form?.addEventListener('submit',async(event)=>{event.preventDefault();const button=form.querySelector<HTMLButtonElement>('button[type=submit]');if(button)button.disabled=true;if(status)status.textContent='접수하고 있습니다…';try{const body=new FormData(form);const res=await fetch('/api/contact',{method:'POST',body});const data=await res.json() as {ok:boolean;message:string};if(!res.ok)throw new Error(data.message);form.reset();if(status)status.textContent='문의가 정상적으로 접수되었습니다. 확인 후 전화로 연락드리겠습니다.';window.turnstile?.reset()}catch(error){if(status)status.textContent=error instanceof Error?error.message:'접수 중 문제가 발생했습니다.';window.turnstile?.reset()}finally{if(button)button.disabled=false}});</script><style>.contact-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:90px}.contact-form{padding:40px;border-radius:var(--radius-md);background:#fff;box-shadow:var(--shadow)}.field small{color:var(--muted);font-weight:400}.field em{color:var(--pink-dark);font-style:normal}.consent label{display:flex;gap:10px;align-items:flex-start}.consent input{width:auto;margin-top:5px}.contact-note{display:grid;gap:5px;margin-top:50px;padding-top:22px;border-top:1px solid var(--line)}#form-message{margin:0;color:var(--pink-dark)}@media(max-width:760px){.contact-grid{grid-template-columns:1fr;gap:40px}.contact-form{padding:24px}}</style>
+
+<BaseLayout
+  title="문의하기 | 파우마우"
+  description="상품, 입점, 도매, 커스텀 제작 및 협업에 관해 파우마우에 문의하세요."
+  ><PageHero
+    eyebrow="Contact"
+    title="함께할 이야기를 들려주세요"
+    description="상품과 커스텀 제작, 입점·도매, 협업에 관한 문의를 남겨주시면 확인 후 전화로 연락드립니다."
+  /><section class="section section--soft">
+    <div class="container contact-grid">
+      <aside class="reveal">
+        <p class="eyebrow">Before you send</p><h2>
+          천천히 확인하고<br />정성껏 답하겠습니다
+        </h2><p>
+          문의 내용은 관리자 페이지에서만 확인합니다. 접수 후 별도의 문자나
+          이메일은 발송되지 않습니다.
+        </p><div class="contact-note">
+          <strong>사업장</strong><span
+            >경기도 부천시 소사구 소삼로14번길 28</span>
+        </div>
+      </aside><form id="contact-form" class="contact-form reveal">
+        <div class="form-grid">
+          <div class="field">
+            <label for="name">이름 <small>선택</small></label><input
+              id="name"
+              name="name"
+              maxlength="50"
+              autocomplete="name"
+            />
+          </div><div class="field">
+            <label for="phone">연락처 <em>필수</em></label><input
+              id="phone"
+              name="phone"
+              required
+              maxlength="13"
+              inputmode="numeric"
+              autocomplete="tel"
+              placeholder="010-1234-5678"
+              aria-describedby="phone-help"
+            /><small id="phone-help"
+              >숫자만 입력하면 하이픈이 자동으로 추가됩니다.</small>
+          </div><div class="field">
+            <label for="company">회사명 <small>선택</small></label><input
+              id="company"
+              name="company"
+              maxlength="100"
+              autocomplete="organization"
+            />
+          </div><div class="field">
+            <label for="inquiryType">문의 유형 <em>필수</em></label><select
+              id="inquiryType"
+              name="inquiryType"
+              required
+              ><option value="">선택해 주세요</option>{
+                [
+                  "상품 문의",
+                  "입점·도매 문의",
+                  "제휴·협업 문의",
+                  "오프라인 문의",
+                  "기타",
+                ].map((x) => (
+                  <option value={x} selected={selected === x}>
+                    {x}
+                  </option>
+                ))
+              }</select>
+          </div><div class="field field--full">
+            <label for="message">문의 내용 <em>필수</em></label><textarea
+              id="message"
+              name="message"
+              required
+              maxlength="3000"
+              placeholder="문의 내용을 자세히 알려주세요."
+              >{product ? `[문의 상품: ${product}]\n` : ""}</textarea>
+          </div><div class="field field--full consent">
+            <label
+              ><input type="checkbox" name="privacyConsent" required /><span
+                ><a href="/privacy" target="_blank">개인정보 수집 및 이용</a>에
+                동의합니다. <em>필수</em></span
+              ></label>
+          </div><div class="field field--full">
+            <div
+              class="cf-turnstile"
+              data-sitekey={env.PUBLIC_TURNSTILE_SITE_KEY ??
+                "1x00000000000000000000AA"}
+            >
+            </div><button class="btn btn--pink" type="submit"
+              >문의 접수하기</button
+            ><p id="form-message" role="status" aria-live="polite"></p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section><div
+    id="contact-success"
+    class="success-overlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="success-title"
+    hidden
+  >
+    <div class="success-dialog">
+      <h2 id="success-title">문의 접수가 완료되었습니다</h2><p>
+        문의가 정상적으로 접수되었습니다.<br />확인 후 전화로 연락드리겠습니다.
+      </p><button id="success-confirm" class="btn btn--pink" type="button"
+        >확인</button>
+    </div>
+  </div><script
+    src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+    async
+    defer></script></BaseLayout
+>
+<script>
+  const form = document.querySelector<HTMLFormElement>("#contact-form");
+  const phone = document.querySelector<HTMLInputElement>("#phone");
+  const status = document.querySelector<HTMLElement>("#form-message");
+  const successOverlay =
+    document.querySelector<HTMLElement>("#contact-success");
+  const successConfirm =
+    document.querySelector<HTMLButtonElement>("#success-confirm");
+
+  const formatPhone = (value: string) => {
+    const digits = value.replace(/\D/g, "").slice(0, 11);
+    if (digits.startsWith("02")) {
+      if (digits.length <= 2) return digits;
+      if (digits.length <= 5) return `${digits.slice(0, 2)}-${digits.slice(2)}`;
+      if (digits.length <= 9)
+        return `${digits.slice(0, 2)}-${digits.slice(2, 5)}-${digits.slice(5)}`;
+      return `${digits.slice(0, 2)}-${digits.slice(2, 6)}-${digits.slice(6)}`;
+    }
+    if (digits.length <= 3) return digits;
+    if (digits.length <= 6) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+    if (digits.length <= 10)
+      return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
+    return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`;
+  };
+
+  phone?.addEventListener("input", () => {
+    phone.value = formatPhone(phone.value);
+  });
+
+  successConfirm?.addEventListener("click", () => window.location.reload());
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const button = form.querySelector<HTMLButtonElement>("button[type=submit]");
+    if (button) button.disabled = true;
+    if (status) status.textContent = "접수하고 있습니다…";
+    try {
+      const body = new FormData(form);
+      const res = await fetch("/api/contact", { method: "POST", body });
+      const data = (await res.json()) as { ok: boolean; message: string };
+      if (!res.ok) throw new Error(data.message);
+      if (status) status.textContent = "";
+      if (successOverlay) successOverlay.hidden = false;
+      successConfirm?.focus();
+    } catch (error) {
+      if (status)
+        status.textContent =
+          error instanceof Error
+            ? error.message
+            : "접수 중 문제가 발생했습니다.";
+      window.turnstile?.reset();
+    } finally {
+      if (button) button.disabled = false;
+    }
+  });
+</script><style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 90px;
+  }
+  .contact-form {
+    padding: 40px;
+    border-radius: var(--radius-md);
+    background: #fff;
+    box-shadow: var(--shadow);
+  }
+  .field small {
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .field em {
+    color: var(--pink-dark);
+    font-style: normal;
+  }
+  .consent label {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .consent input {
+    width: auto;
+    margin-top: 5px;
+  }
+  .contact-note {
+    display: grid;
+    gap: 5px;
+    margin-top: 50px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+  }
+  #form-message {
+    margin: 0;
+    color: var(--pink-dark);
+  }
+  .success-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: rgba(45, 34, 31, 0.58);
+    backdrop-filter: blur(4px);
+  }
+  .success-overlay[hidden] {
+    display: none;
+  }
+  .success-dialog {
+    width: min(100%, 430px);
+    padding: 38px 30px;
+    border-radius: var(--radius-md);
+    background: #fff;
+    text-align: center;
+    box-shadow: 0 24px 70px rgba(45, 34, 31, 0.24);
+  }
+  .success-dialog h2 {
+    margin: 0 0 14px;
+    font-size: 1.45rem;
+  }
+  .success-dialog p {
+    margin: 0 0 26px;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+  @media (max-width: 760px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .contact-form {
+      padding: 24px;
+    }
+    .success-dialog {
+      padding: 32px 22px;
+    }
+  }
+</style>
