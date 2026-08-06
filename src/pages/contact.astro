@@ -39,10 +39,9 @@ const product = Astro.url.searchParams.get("product") ?? "";
               id="phone"
               name="phone"
               required
-              maxlength="13"
-              inputmode="numeric"
+              maxlength="20"
+              inputmode="tel"
               autocomplete="tel"
-              placeholder="010-1234-5678"
             />
           </div><div class="field">
             <label for="company">회사명 <small>선택</small></label><input
@@ -96,56 +95,14 @@ const product = Astro.url.searchParams.get("product") ?? "";
         </div>
       </form>
     </div>
-  </section><div
-    id="contact-success"
-    class="success-overlay"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="success-title"
-    hidden
-  >
-    <div class="success-dialog">
-      <h2 id="success-title">문의 접수가 완료되었습니다</h2><p>
-        문의가 정상적으로 접수되었습니다.<br />확인 후 전화로 연락드리겠습니다.
-      </p><button id="success-confirm" class="btn btn--pink" type="button"
-        >확인</button>
-    </div>
-  </div><script
+  </section><script
     src="https://challenges.cloudflare.com/turnstile/v0/api.js"
     async
     defer></script></BaseLayout
 >
 <script>
   const form = document.querySelector<HTMLFormElement>("#contact-form");
-  const phone = document.querySelector<HTMLInputElement>("#phone");
   const status = document.querySelector<HTMLElement>("#form-message");
-  const successOverlay =
-    document.querySelector<HTMLElement>("#contact-success");
-  const successConfirm =
-    document.querySelector<HTMLButtonElement>("#success-confirm");
-
-  const formatPhone = (value: string) => {
-    const digits = value.replace(/\D/g, "").slice(0, 11);
-    if (digits.startsWith("02")) {
-      if (digits.length <= 2) return digits;
-      if (digits.length <= 5) return `${digits.slice(0, 2)}-${digits.slice(2)}`;
-      if (digits.length <= 9)
-        return `${digits.slice(0, 2)}-${digits.slice(2, 5)}-${digits.slice(5)}`;
-      return `${digits.slice(0, 2)}-${digits.slice(2, 6)}-${digits.slice(6)}`;
-    }
-    if (digits.length <= 3) return digits;
-    if (digits.length <= 6) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
-    if (digits.length <= 10)
-      return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
-    return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`;
-  };
-
-  phone?.addEventListener("input", () => {
-    phone.value = formatPhone(phone.value);
-  });
-
-  successConfirm?.addEventListener("click", () => window.location.reload());
-
   form?.addEventListener("submit", async (event) => {
     event.preventDefault();
     const button = form.querySelector<HTMLButtonElement>("button[type=submit]");
@@ -156,9 +113,11 @@ const product = Astro.url.searchParams.get("product") ?? "";
       const res = await fetch("/api/contact", { method: "POST", body });
       const data = (await res.json()) as { ok: boolean; message: string };
       if (!res.ok) throw new Error(data.message);
-      if (status) status.textContent = "";
-      if (successOverlay) successOverlay.hidden = false;
-      successConfirm?.focus();
+      form.reset();
+      if (status)
+        status.textContent =
+          "문의가 정상적으로 접수되었습니다.";
+      window.turnstile?.reset();
     } catch (error) {
       if (status)
         status.textContent =
@@ -210,36 +169,6 @@ const product = Astro.url.searchParams.get("product") ?? "";
     margin: 0;
     color: var(--pink-dark);
   }
-  .success-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-    display: grid;
-    place-items: center;
-    padding: 24px;
-    background: rgba(45, 34, 31, 0.58);
-    backdrop-filter: blur(4px);
-  }
-  .success-overlay[hidden] {
-    display: none;
-  }
-  .success-dialog {
-    width: min(100%, 430px);
-    padding: 38px 30px;
-    border-radius: var(--radius-md);
-    background: #fff;
-    text-align: center;
-    box-shadow: 0 24px 70px rgba(45, 34, 31, 0.24);
-  }
-  .success-dialog h2 {
-    margin: 0 0 14px;
-    font-size: 1.45rem;
-  }
-  .success-dialog p {
-    margin: 0 0 26px;
-    line-height: 1.8;
-    color: var(--muted);
-  }
   @media (max-width: 760px) {
     .contact-grid {
       grid-template-columns: 1fr;
@@ -247,9 +176,6 @@ const product = Astro.url.searchParams.get("product") ?? "";
     }
     .contact-form {
       padding: 24px;
-    }
-    .success-dialog {
-      padding: 32px 22px;
     }
   }
 </style>

@@ -174,6 +174,26 @@ export default function AdminApp({
     });
     await load();
   }
+  function openEditor(item: Item) {
+    let imageUrls: unknown[] = [];
+    if (Array.isArray(item.image_urls)) {
+      imageUrls = item.image_urls;
+    } else if (typeof item.image_urls === "string") {
+      try {
+        const parsed = JSON.parse(item.image_urls);
+        imageUrls = Array.isArray(parsed) ? parsed : [];
+      } catch {
+        imageUrls = [];
+      }
+    }
+    setEditing({
+      ...item,
+      is_visible: Boolean(item.is_visible),
+      ...(tab === "products"
+        ? { is_featured: Boolean(item.is_featured), image_urls: imageUrls }
+        : {}),
+    });
+  }
   async function complete(item: Item) {
     const result = prompt("처리 결과를 입력해 주세요.");
     if (!result?.trim()) return;
@@ -316,7 +336,7 @@ export default function AdminApp({
                     </div>
                     {item.name && (
                       <div>
-                        <dt>이름</dt>
+                        <dt>성명</dt>
                         <dd>{item.name}</dd>
                       </div>
                     )}
@@ -362,17 +382,7 @@ export default function AdminApp({
                   <p>{item.category ?? item.address ?? item.published_at}</p>
                 </div>
                 <div>
-                  <button
-                    onClick={() =>
-                      setEditing({
-                        ...item,
-                        image_urls:
-                          typeof item.image_urls === "string"
-                            ? JSON.parse(item.image_urls)
-                            : item.image_urls,
-                      })
-                    }
-                  >
+                    <button onClick={() => openEditor(item)}>
                     수정
                   </button>
                   <button className="danger" onClick={() => remove(item)}>
