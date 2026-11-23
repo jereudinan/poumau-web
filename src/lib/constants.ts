@@ -7,7 +7,7 @@ export const SITE = {
   blog: 'https://blog.naver.com/poumau',
   instagram: 'https://www.instagram.com/poumau_official/',
   youtube: 'https://www.youtube.com/@poumau-kr',
-  address: '경기도 부천시 소사구 소삼로14번길 28',
+  address: '경기도 시흥시 시흥대로1073번길 39',
 } as const;
 
 export const PRODUCT_CATEGORIES = ['파우치·가방', '키링·소품', '패션·의류', '시즌·기획 상품'] as const;
